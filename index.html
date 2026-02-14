@@ -11,31 +11,48 @@
   --pink:#ff6b9d;--dark-pink:#e0477a;--soft:#fff0f5;
   --yellow:#ffd166;--purple:#c77dff;--text:#3a1a2e;--card:#fff;--red:#ff3860;
 }
+
+/* ── BASE ── */
 body{
-  min-height:100vh;background:var(--soft);
+  min-height:100vh;
+  background:var(--soft);
   background-image:
     radial-gradient(circle at 20% 50%,rgba(255,107,157,.12) 0%,transparent 50%),
     radial-gradient(circle at 80% 20%,rgba(199,125,255,.1) 0%,transparent 40%),
     radial-gradient(circle at 60% 80%,rgba(255,209,102,.1) 0%,transparent 40%);
   display:flex;align-items:center;justify-content:center;
-  font-family:'Nunito',sans-serif;overflow:hidden;
+  font-family:'Nunito',sans-serif;
+  overflow:hidden;
   cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='26'%3E🫶%3C/text%3E%3C/svg%3E") 12 12,auto;
-  position:relative;transition:background 1.2s;
+  position:relative;
+  transition:background 1.2s;
 }
-body.d1{background:#ffe0ec;}body.d2{background:#ffc0d4;}
-body.d3{background:#ffaac6;}body.d4{background:#ff8fb4;}
+/* Drama escalation */
+body.d1{background:#ffe0ec;}
+body.d2{background:#ffc0d4;}
+body.d3{background:#ffaac6;}
+body.d4{background:#ff8fb4;}
 body.d5{background:#2a0a15;}
 body.d5 .card{background:#1a0a0f;border-color:#ff6b9d;}
-body.d5 .question,body.d5 .no-count{color:#ff6b9d;}
+body.d5 .question{color:#ff6b9d;}
 body.d5 .bubble{background:#3a0f1f;color:#ffb3cf;border-color:#ff6b9d;}
 body.d5 .together-wrap{color:#ff8fb4;}
 body.d5 .together-wrap span{color:#ffb3cf;}
 body.d5 .reasons-wrap{background:rgba(255,107,157,.1);border-color:rgba(255,107,157,.5);color:#ffb3cf;}
 body.d5 .reason-label{color:#ff8fb4;}
+/* Win layout — scrollable, centered column */
+body.win{
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:flex-start;
+  overflow-y:auto;overflow-x:hidden;
+  padding:24px 0 80px;
+}
 
+/* ── CANVASES ── */
 #particles{position:fixed;inset:0;pointer-events:none;z-index:0;}
 #fireworks{position:fixed;inset:0;pointer-events:none;z-index:5;}
 
+/* ── MUSIC BUTTON ── */
 #musicBtn{
   position:fixed;top:16px;right:16px;z-index:400;
   background:white;border:2px solid var(--pink);border-radius:50%;
@@ -45,14 +62,21 @@ body.d5 .reason-label{color:#ff8fb4;}
 }
 #musicBtn:hover{transform:scale(1.15);}
 
-/* ══ DOOR ══ */
-#door-screen{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;gap:0;}
+/* ══════════════════════
+   DOOR SCREEN
+══════════════════════ */
+#door-screen{
+  position:relative;z-index:10;
+  display:flex;flex-direction:column;align-items:center;
+}
 .door-label{
   font-family:'Fredoka One',cursive;font-size:1.1rem;color:var(--purple);
   margin-bottom:14px;opacity:0;animation:fadeUp .6s .3s forwards;
 }
-@keyframes fadeUp{from{opacity:0;transform:translateY(-12px);}to{opacity:1;transform:translateY(0);}}
-
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(-12px);}
+  to{opacity:1;transform:translateY(0);}
+}
 .door-frame{
   width:200px;background:linear-gradient(160deg,#8B4513,#6B3410);
   border-radius:16px 16px 0 0;padding:6px;
@@ -76,51 +100,92 @@ body.d5 .reason-label{color:#ff8fb4;}
 .door-right{right:0;border-radius:0 12px 0 0;transform-origin:right center;}
 .door-left.open{transform:rotateY(-80deg);}
 .door-right.open{transform:rotateY(80deg);}
-.door-panel{width:38px;height:70px;border:2px solid rgba(139,69,19,.5);border-radius:6px;background:rgba(255,255,255,.07);position:absolute;}
+.door-panel{
+  width:38px;height:70px;
+  border:2px solid rgba(139,69,19,.5);border-radius:6px;
+  background:rgba(255,255,255,.07);position:absolute;
+}
 .door-left .door-panel:nth-child(1){top:30px;left:10px;}
 .door-left .door-panel:nth-child(2){bottom:30px;left:10px;}
 .door-right .door-panel:nth-child(1){top:30px;right:10px;}
 .door-right .door-panel:nth-child(2){bottom:30px;right:10px;}
-.door-knob{width:12px;height:12px;background:radial-gradient(circle at 35% 35%,#ffd700,#b8860b);border-radius:50%;position:absolute;box-shadow:0 2px 4px rgba(0,0,0,.4);}
+.door-knob{
+  width:12px;height:12px;
+  background:radial-gradient(circle at 35% 35%,#ffd700,#b8860b);
+  border-radius:50%;position:absolute;
+  box-shadow:0 2px 4px rgba(0,0,0,.4);
+}
 .door-left .door-knob{right:6px;}
 .door-right .door-knob{left:6px;}
-.door-reveal{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;opacity:0;transition:opacity .6s .8s;}
+.door-reveal{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+  opacity:0;transition:opacity .6s;  /* removed delay — triggered by .show class timing in JS */
+}
 .door-reveal.show{opacity:1;}
 .bear-peek{font-size:3.5rem;animation:peekBob 1s ease-in-out infinite;}
 @keyframes peekBob{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
-.door-reveal p{font-family:'Fredoka One',cursive;font-size:.9rem;color:#e0477a;text-align:center;padding:0 10px;}
-.door-step{width:214px;height:18px;background:linear-gradient(180deg,#5D3A1A,#4a2d12);border-radius:0 0 8px 8px;box-shadow:0 6px 16px rgba(0,0,0,.2);opacity:0;animation:fadeUp .6s .5s forwards;}
-
+.door-reveal p{
+  font-family:'Fredoka One',cursive;font-size:.9rem;
+  color:#e0477a;text-align:center;padding:0 10px;
+}
+.door-step{
+  width:214px;height:18px;
+  background:linear-gradient(180deg,#5D3A1A,#4a2d12);
+  border-radius:0 0 8px 8px;
+  box-shadow:0 6px 16px rgba(0,0,0,.2);
+  opacity:0;animation:fadeUp .6s .5s forwards;
+}
 .knock-bubble{
   background:white;border:2.5px solid var(--pink);border-radius:20px;
   padding:10px 20px;font-family:'Fredoka One',cursive;font-size:1rem;color:var(--text);
   margin-top:18px;box-shadow:0 4px 16px rgba(255,107,157,.2);
   opacity:0;animation:fadeUp .6s .8s forwards;position:relative;
 }
-.knock-bubble::before{content:'';position:absolute;top:-10px;left:50%;transform:translateX(-50%);border:5px solid transparent;border-bottom-color:var(--pink);}
-
+.knock-bubble::before{
+  content:'';position:absolute;top:-10px;left:50%;transform:translateX(-50%);
+  border:5px solid transparent;border-bottom-color:var(--pink);
+}
 .open-btn{
-  background:linear-gradient(135deg,#ff6b9d,#e0477a);color:white;border:none;border-radius:50px;
-  font-family:'Fredoka One',cursive;font-size:1.1rem;padding:14px 36px;cursor:pointer;margin-top:16px;
-  box-shadow:0 6px 24px rgba(255,107,157,.4);opacity:0;animation:fadeUp .6s 1s forwards;
+  background:linear-gradient(135deg,#ff6b9d,#e0477a);color:white;
+  border:none;border-radius:50px;
+  font-family:'Fredoka One',cursive;font-size:1.1rem;padding:14px 36px;
+  cursor:pointer;margin-top:16px;
+  box-shadow:0 6px 24px rgba(255,107,157,.4);
+  opacity:0;animation:fadeUp .6s 1s forwards;
   transition:transform .15s,box-shadow .15s;
 }
 .open-btn:hover{transform:translateY(-3px) scale(1.05);box-shadow:0 10px 30px rgba(255,107,157,.5);}
 .open-btn:active{transform:scale(.96);}
-@keyframes knock{0%,100%{transform:translateX(0);}20%{transform:translateX(-5px);}40%{transform:translateX(5px);}60%{transform:translateX(-3px);}80%{transform:translateX(3px);}}
-.knocking{animation:knock .4s ease!important;}
+@keyframes doorKnock{
+  0%,100%{transform:translateX(0);}
+  20%{transform:translateX(-5px);}40%{transform:translateX(5px);}
+  60%{transform:translateX(-3px);}80%{transform:translateX(3px);}
+}
+.knocking{animation:doorKnock .4s ease!important;}
 
-/* ══ CARD ══ */
+/* ══════════════════════
+   MAIN CARD
+══════════════════════ */
 .card{
-  position:relative;z-index:10;background:var(--card);border-radius:36px;
-  padding:36px 36px 30px;max-width:460px;width:94vw;
+  position:relative;z-index:10;background:var(--card);
+  border-radius:36px;padding:36px 36px 30px;
+  max-width:460px;width:94vw;
   box-shadow:0 8px 60px rgba(255,107,157,.25),0 2px 8px rgba(0,0,0,.07);
-  border:3px solid rgba(255,107,157,.2);text-align:center;display:none;
+  border:3px solid rgba(255,107,157,.2);
+  text-align:center;display:none;
   transition:box-shadow .5s,border-color .5s;
 }
-@keyframes cardIn{from{opacity:0;transform:scale(.7) translateY(40px);}to{opacity:1;transform:scale(1) translateY(0);}}
+@keyframes cardIn{
+  from{opacity:0;transform:scale(.7) translateY(40px);}
+  to{opacity:1;transform:scale(1) translateY(0);}
+}
 .card.visible{display:block;animation:cardIn .7s cubic-bezier(.34,1.56,.64,1) forwards;}
-@keyframes hb{0%,100%{box-shadow:0 8px 60px rgba(255,107,157,.25);}50%{box-shadow:0 8px 90px rgba(255,107,157,.65);}}
+/* Heartbeat pulses */
+@keyframes hb{
+  0%,100%{box-shadow:0 8px 60px rgba(255,107,157,.25);}
+  50%{box-shadow:0 8px 90px rgba(255,107,157,.65);}
+}
 .ps{animation:hb 2s ease infinite;}
 .pf{animation:hb .55s ease infinite;}
 .pp{animation:hb .22s ease infinite;}
@@ -129,16 +194,16 @@ body.d5 .reason-label{color:#ff8fb4;}
 .bear-wrap{position:relative;display:inline-block;margin-bottom:6px;}
 .bear{font-size:5.5rem;display:block;line-height:1;animation:bob 2s ease-in-out infinite;}
 @keyframes bob{0%,100%{transform:translateY(0) rotate(-2deg);}50%{transform:translateY(-8px) rotate(2deg);}}
-.bear.sad{animation:cry .5s ease-in-out infinite alternate!important;}
-@keyframes cry{from{transform:rotate(-6deg) scale(.95);}to{transform:rotate(6deg) scale(1.05);}}
-.bear.happy{animation:dance .4s ease infinite!important;}
-@keyframes dance{0%{transform:rotate(-15deg) scale(1.1);}50%{transform:rotate(15deg) scale(1.2);}100%{transform:rotate(-15deg) scale(1.1);}}
-.bear.faint{animation:faint .7s ease forwards!important;}
-@keyframes faint{0%{transform:scale(1) rotate(0);}40%{transform:scale(1.15) rotate(-20deg);}100%{transform:scale(.8) rotate(90deg) translateY(20px);opacity:.4;}}
-.tear{position:absolute;font-size:1.1rem;animation:tf .8s ease-in forwards;pointer-events:none;}
-@keyframes tf{from{transform:translateY(0);opacity:1;}to{transform:translateY(60px);opacity:0;}}
+.bear.sad{animation:bearCry .5s ease-in-out infinite alternate!important;}
+@keyframes bearCry{from{transform:rotate(-6deg) scale(.95);}to{transform:rotate(6deg) scale(1.05);}}
+.bear.happy{animation:bearDance .4s ease infinite!important;}
+@keyframes bearDance{0%{transform:rotate(-15deg) scale(1.1);}50%{transform:rotate(15deg) scale(1.2);}100%{transform:rotate(-15deg) scale(1.1);}}
+.bear.faint{animation:bearFaint .7s ease forwards!important;}
+@keyframes bearFaint{0%{transform:scale(1) rotate(0);}40%{transform:scale(1.15) rotate(-20deg);}100%{transform:scale(.8) rotate(90deg) translateY(20px);opacity:.4;}}
+.tear{position:absolute;font-size:1.1rem;animation:tearFall .8s ease-in forwards;pointer-events:none;}
+@keyframes tearFall{from{transform:translateY(0);opacity:1;}to{transform:translateY(60px);opacity:0;}}
 
-/* ── HP bar ── */
+/* ── HP Bar ── */
 .health-wrap{display:flex;align-items:center;gap:8px;justify-content:center;margin-bottom:10px;}
 .hl{font-size:.72rem;font-weight:700;color:var(--pink);}
 .hbg{flex:1;max-width:160px;background:#ffe0ec;border-radius:20px;height:11px;overflow:hidden;border:1.5px solid rgba(255,107,157,.25);}
@@ -146,9 +211,18 @@ body.d5 .reason-label{color:#ff8fb4;}
 .hbar.w{background:linear-gradient(90deg,#f39c12,#e67e22);}
 .hbar.d{background:linear-gradient(90deg,#e74c3c,#c0392b);}
 
-/* ── Bubble ── */
-.bubble{background:var(--soft);border:2px solid var(--pink);border-radius:20px;padding:10px 18px;font-size:.9rem;font-weight:700;color:var(--text);margin-bottom:14px;min-height:44px;display:flex;align-items:center;justify-content:center;position:relative;transition:all .3s;}
-.bubble::after{content:'';position:absolute;bottom:-12px;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:var(--pink);}
+/* ── Speech bubble ── */
+.bubble{
+  background:var(--soft);border:2px solid var(--pink);border-radius:20px;
+  padding:10px 18px;font-size:.9rem;font-weight:700;color:var(--text);
+  margin-bottom:14px;min-height:44px;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;transition:all .3s;
+}
+.bubble::after{
+  content:'';position:absolute;bottom:-12px;left:50%;transform:translateX(-50%);
+  border:6px solid transparent;border-top-color:var(--pink);
+}
 
 /* ── Question ── */
 .question{font-family:'Fredoka One',cursive;font-size:2.1rem;color:var(--text);margin-bottom:8px;line-height:1.2;}
@@ -159,19 +233,22 @@ body.d5 .reason-label{color:#ff8fb4;}
   padding:7px 14px;margin-bottom:14px;
   font-size:.8rem;font-weight:700;color:#c06080;
   min-height:36px;display:flex;align-items:center;justify-content:center;gap:8px;
-  transition:all .3s;border:1.5px solid transparent;
+  border:1.5px solid transparent;transition:border-color .3s;
 }
 .no-counter-wrap.active{border-color:rgba(255,107,157,.3);}
 .ncb{
   background:var(--pink);color:white;font-family:'Fredoka One',cursive;
   font-size:1rem;border-radius:50%;width:28px;height:28px;
   display:inline-flex;align-items:center;justify-content:center;
-  animation:bp .3s cubic-bezier(.34,1.56,.64,1);
+  animation:badgePop .3s cubic-bezier(.34,1.56,.64,1);
 }
-@keyframes bp{from{transform:scale(0);}to{transform:scale(1);}}
+@keyframes badgePop{from{transform:scale(0);}to{transform:scale(1);}}
 
-/* ── Buttons — flex row, NO absolute ── */
-.btn-row{display:flex;align-items:center;justify-content:center;gap:22px;min-height:80px;position:relative;}
+/* ── Buttons ── */
+.btn-row{
+  display:flex;align-items:center;justify-content:center;
+  gap:22px;min-height:80px;
+}
 .btn{border:none;border-radius:50px;font-family:'Fredoka One',cursive;cursor:pointer;outline:none;flex-shrink:0;}
 .btn-yes{
   font-size:1.3rem;padding:16px 44px;
@@ -185,7 +262,7 @@ body.d5 .reason-label{color:#ff8fb4;}
   font-size:1.3rem;padding:16px 44px;
   background:white;color:#ff6b9d;border:2.5px solid #ffb3cf;
   box-shadow:0 3px 12px rgba(0,0,0,.08);
-  transition:font-size .4s,padding .4s,opacity .4s,transform .25s cubic-bezier(.34,1.56,.64,1);
+  transition:font-size .4s,padding .4s,opacity .4s,transform .3s cubic-bezier(.34,1.56,.64,1);
 }
 .btn-no:hover{background:#fff5f8;}
 
@@ -193,16 +270,16 @@ body.d5 .reason-label{color:#ff8fb4;}
 .dbar-wrap{margin-top:14px;background:#ffe0ec;border-radius:20px;height:9px;overflow:hidden;}
 .dbar{height:100%;background:linear-gradient(90deg,#06d6a0,#ffd166,#ff6b9d,#c77dff);width:0%;border-radius:20px;transition:width .5s cubic-bezier(.34,1.56,.64,1);}
 .dlabel{font-size:.67rem;color:#bbb;margin-top:4px;display:flex;justify-content:space-between;}
-.critical{color:var(--red);font-weight:900;display:none;animation:bl .4s ease infinite alternate;}
-@keyframes bl{from{opacity:1;}to{opacity:.2;}}
+.critical{color:var(--red);font-weight:900;display:none;animation:critBlink .4s ease infinite alternate;}
+@keyframes critBlink{from{opacity:1;}to{opacity:.2;}}
 
-/* ── Reasons ── */
+/* ── Reasons box ── */
 .reasons-wrap{
   margin-top:14px;background:rgba(255,107,157,.05);border-radius:16px;padding:10px 14px;
   border:1.5px dashed rgba(255,107,157,.3);min-height:42px;
   display:flex;align-items:center;justify-content:center;
   font-family:'Caveat',cursive;font-size:1.08rem;color:var(--text);
-  transition:all .4s;cursor:pointer;
+  cursor:pointer;transition:background .3s;
 }
 .reasons-wrap:hover{background:rgba(255,107,157,.1);}
 .reason-label{font-size:.65rem;color:#bbb;margin-bottom:2px;font-family:'Nunito',sans-serif;}
@@ -212,69 +289,158 @@ body.d5 .reason-label{color:#ff8fb4;}
 .together-wrap{font-size:.71rem;color:#cba0b8;margin-top:8px;}
 .together-wrap span{font-weight:900;color:var(--pink);}
 
-/* ══ WIN ══ */
+/* ══════════════════════
+   WIN SCREEN
+══════════════════════ */
 #win-screen{
-  display:none;position:relative;z-index:20;
+  display:none;
+  position:relative;z-index:20;
   max-width:500px;width:94vw;
   flex-direction:column;align-items:center;gap:8px;
-  margin:0 auto;padding:20px 0 40px;
+  margin:0 auto;
 }
 @keyframes popIn{from{opacity:0;transform:scale(.6);}to{opacity:1;transform:scale(1);}}
-.win-emoji-row{font-size:3rem;letter-spacing:8px;animation:wgl .5s ease infinite alternate;display:block;text-align:center;margin-bottom:10px;}
-@keyframes wgl{from{transform:rotate(-5deg);}to{transform:rotate(5deg);}}
+.win-emoji-row{
+  font-size:3rem;letter-spacing:8px;
+  animation:emojiWiggle .5s ease infinite alternate;
+  display:block;text-align:center;margin-bottom:10px;
+}
+@keyframes emojiWiggle{from{transform:rotate(-5deg);}to{transform:rotate(5deg);}}
 
+/* ── Envelope ── */
 .envelope{width:100%;max-width:440px;margin:0 auto;}
-.env-flap-wrap{width:100%;overflow:hidden;height:80px;position:relative;}
+.env-flap-wrap{
+  width:100%;height:0;position:relative;
+  /* Use padding-bottom trick for correct triangle proportions */
+  padding-bottom:80px;overflow:hidden;
+}
 .env-flap{
-  position:absolute;top:0;left:0;right:0;height:0;
-  border-left:50% solid transparent;
-  border-right:50% solid transparent;
+  position:absolute;top:0;left:0;width:100%;height:0;
+  /* Fixed px values for reliable triangle on all browsers */
+  border-left:220px solid transparent;
+  border-right:220px solid transparent;
   border-top:80px solid #ff6b9d;
-  transform-origin:top center;transition:transform .9s cubic-bezier(.4,0,.2,1);
+  transform-origin:top center;
+  transition:transform .9s cubic-bezier(.4,0,.2,1);
 }
 .env-flap.open{transform:scaleY(-1);}
-.env-body{background:linear-gradient(135deg,#fff0f5,#ffe0ec);border-radius:0 0 20px 20px;padding:16px 16px 24px;border:2px solid rgba(255,107,157,.4);border-top:none;}
+.env-body{
+  background:linear-gradient(135deg,#fff0f5,#ffe0ec);
+  border-radius:0 0 20px 20px;
+  padding:16px 16px 24px;
+  border:2px solid rgba(255,107,157,.4);border-top:none;
+}
 
+/* ── Love Letter ── */
 .letter{
   background:white;border-radius:12px;padding:20px 18px;
   box-shadow:0 4px 20px rgba(255,107,157,.15);
   transform:translateY(50px);opacity:0;
   transition:transform .8s .7s cubic-bezier(.34,1.56,.64,1),opacity .8s .7s;
-  font-family:'Caveat',cursive;font-size:1.18rem;color:var(--text);line-height:1.9;text-align:left;
+  font-family:'Caveat',cursive;font-size:1.18rem;
+  color:var(--text);line-height:1.9;text-align:left;
 }
 .letter.revealed{transform:translateY(0);opacity:1;}
-.letter-heading{font-family:'Fredoka One',cursive;font-size:1.4rem;color:var(--pink);text-align:center;margin-bottom:14px;}
+.letter-heading{
+  font-family:'Fredoka One',cursive;font-size:1.4rem;
+  color:var(--pink);text-align:center;margin-bottom:14px;
+}
 .letter p{margin-bottom:12px;}
-.letter-sig{text-align:right;margin-top:14px;font-family:'Fredoka One',cursive;font-size:1.1rem;color:var(--pink);}
-
-.win-stamp{background:linear-gradient(135deg,#ff6b9d,#e0477a);color:white;font-family:'Fredoka One',cursive;font-size:.95rem;padding:10px 28px;border-radius:50px;box-shadow:0 4px 16px rgba(255,107,157,.4);margin:14px auto 0;display:inline-block;animation:popIn .5s 1.6s cubic-bezier(.34,1.56,.64,1) both;}
-.save-btn{background:white;color:var(--pink);border:2px solid var(--pink);font-family:'Fredoka One',cursive;font-size:.9rem;padding:9px 26px;border-radius:50px;cursor:pointer;margin-top:10px;display:inline-block;transition:transform .15s,background .2s;animation:popIn .5s 2s cubic-bezier(.34,1.56,.64,1) both;}
+.letter-sig{
+  text-align:right;margin-top:14px;
+  font-family:'Fredoka One',cursive;font-size:1.1rem;color:var(--pink);
+}
+.win-stamp{
+  background:linear-gradient(135deg,#ff6b9d,#e0477a);color:white;
+  font-family:'Fredoka One',cursive;font-size:.95rem;
+  padding:10px 28px;border-radius:50px;
+  box-shadow:0 4px 16px rgba(255,107,157,.4);
+  margin:14px auto 0;display:inline-block;
+  animation:popIn .5s 1.6s cubic-bezier(.34,1.56,.64,1) both;
+}
+.save-btn{
+  background:white;color:var(--pink);border:2px solid var(--pink);
+  font-family:'Fredoka One',cursive;font-size:.9rem;
+  padding:9px 26px;border-radius:50px;cursor:pointer;
+  margin-top:10px;display:inline-block;
+  transition:transform .15s,background .2s;
+  animation:popIn .5s 2s cubic-bezier(.34,1.56,.64,1) both;
+}
 .save-btn:hover{background:var(--soft);transform:scale(1.05);}
 
+/* ══════════════════════
+   SHARED HELPERS
+══════════════════════ */
+@keyframes shake{
+  0%{transform:translate(0,0);}
+  15%{transform:translate(-8px,4px) rotate(-1deg);}
+  30%{transform:translate(8px,-4px) rotate(1deg);}
+  45%{transform:translate(-6px,6px) rotate(-.5deg);}
+  60%{transform:translate(6px,-2px) rotate(.5deg);}
+  75%{transform:translate(-3px,3px);}
+  90%{transform:translate(3px,-3px);}
+  100%{transform:translate(0,0);}
+}
+@keyframes megashake{
+  0%{transform:translate(0,0);}
+  10%{transform:translate(-18px,10px) rotate(-3deg);}
+  20%{transform:translate(18px,-10px) rotate(3deg);}
+  30%{transform:translate(-14px,14px) rotate(-2deg);}
+  40%{transform:translate(14px,-6px) rotate(2deg);}
+  50%{transform:translate(-9px,9px);}
+  60%{transform:translate(9px,-9px);}
+  70%{transform:translate(-5px,5px);}
+  80%{transform:translate(5px,-5px);}
+  90%{transform:translate(-2px,2px);}
+  100%{transform:translate(0,0);}
+}
+.shaking{animation:shake .5s ease!important;}
+.megashaking{animation:megashake .8s ease!important;}
+.floaty{
+  position:fixed;font-size:2rem;pointer-events:none;z-index:200;
+  animation:floatAway 1.2s ease forwards;
+}
+@keyframes floatAway{
+  0%{transform:translateY(0) scale(1);opacity:1;}
+  100%{transform:translateY(-130px) scale(1.5);opacity:0;}
+}
+.chaos-text{
+  position:fixed;font-family:'Fredoka One',cursive;font-size:1.4rem;
+  color:var(--pink);pointer-events:none;z-index:300;
+  animation:chaosFloat 1.1s ease forwards;
+  text-shadow:0 2px 8px rgba(255,107,157,.4);
+}
+@keyframes chaosFloat{
+  0%{opacity:1;transform:translateY(0) rotate(0);}
+  100%{opacity:0;transform:translateY(-90px) rotate(20deg);}
+}
+
+/* ══════════════════════
+   MOBILE
+══════════════════════ */
 @media(max-width:480px){
+  .card{padding:28px 20px 24px;}
+  .question{font-size:1.8rem;}
+  .btn-yes{font-size:1.15rem;padding:14px 34px;}
+  .btn-no{font-size:1.15rem;padding:14px 34px;}
   .letter{font-size:1.12rem;padding:16px 14px;line-height:1.85;}
   .letter-heading{font-size:1.2rem;}
   .win-emoji-row{font-size:2.2rem;letter-spacing:4px;}
-  #win-screen{padding:16px 0 60px;}
+  /* Fix envelope triangle for narrow screens */
+  .env-flap{
+    border-left-width:47vw;
+    border-right-width:47vw;
+  }
 }
-
-/* ══ HELPERS ══ */
-@keyframes shake{0%{transform:translate(0,0);}15%{transform:translate(-8px,4px) rotate(-1deg);}30%{transform:translate(8px,-4px) rotate(1deg);}45%{transform:translate(-6px,6px) rotate(-.5deg);}60%{transform:translate(6px,-2px) rotate(.5deg);}75%{transform:translate(-3px,3px);}90%{transform:translate(3px,-3px);}100%{transform:translate(0,0);}}
-@keyframes megashake{0%{transform:translate(0,0);}10%{transform:translate(-18px,10px) rotate(-3deg);}20%{transform:translate(18px,-10px) rotate(3deg);}30%{transform:translate(-14px,14px) rotate(-2deg);}40%{transform:translate(14px,-6px) rotate(2deg);}50%{transform:translate(-9px,9px);}60%{transform:translate(9px,-9px);}70%{transform:translate(-5px,5px);}80%{transform:translate(5px,-5px);}90%{transform:translate(-2px,2px);}100%{transform:translate(0,0);}}
-.shaking{animation:shake .5s ease!important;}
-.megashaking{animation:megashake .8s ease!important;}
-.floaty{position:fixed;font-size:2rem;pointer-events:none;z-index:200;animation:fa 1.2s ease forwards;}
-@keyframes fa{0%{transform:translateY(0) scale(1);opacity:1;}100%{transform:translateY(-130px) scale(1.5);opacity:0;}}
-.chaos-text{position:fixed;font-family:'Fredoka One',cursive;font-size:1.4rem;color:var(--pink);pointer-events:none;z-index:300;animation:cf 1.1s ease forwards;text-shadow:0 2px 8px rgba(255,107,157,.4);}
-@keyframes cf{0%{opacity:1;transform:translateY(0) rotate(0);}100%{opacity:0;transform:translateY(-90px) rotate(20deg);}}
 </style>
 </head>
 <body>
+
 <canvas id="particles"></canvas>
 <canvas id="fireworks"></canvas>
 <button id="musicBtn" onclick="toggleMusic()">🎵</button>
 
-<!-- DOOR -->
+<!-- ══ DOOR ══ -->
 <div id="door-screen">
   <div class="door-label">✨ Someone's at the door… ✨</div>
   <div class="door-frame" id="doorFrame">
@@ -284,10 +450,14 @@ body.d5 .reason-label{color:#ff8fb4;}
         <p>Hi Pampam!! 👉👈<br>I have something to ask…</p>
       </div>
       <div class="door-left" id="doorLeft">
-        <div class="door-panel"></div><div class="door-panel"></div><div class="door-knob"></div>
+        <div class="door-panel"></div>
+        <div class="door-panel"></div>
+        <div class="door-knob"></div>
       </div>
       <div class="door-right" id="doorRight">
-        <div class="door-panel"></div><div class="door-panel"></div><div class="door-knob"></div>
+        <div class="door-panel"></div>
+        <div class="door-panel"></div>
+        <div class="door-knob"></div>
       </div>
     </div>
   </div>
@@ -296,7 +466,7 @@ body.d5 .reason-label{color:#ff8fb4;}
   <button class="open-btn" onclick="openDoor()">Open the door 🚪</button>
 </div>
 
-<!-- CARD -->
+<!-- ══ MAIN CARD ══ -->
 <div class="card" id="card">
   <div id="q-state">
     <div class="health-wrap">
@@ -304,12 +474,14 @@ body.d5 .reason-label{color:#ff8fb4;}
       <div class="hbg"><div class="hbar" id="healthBar"></div></div>
       <span class="hl" id="hpNum">100</span>
     </div>
-    <div class="bear-wrap"><span class="bear" id="bear">🐻</span></div>
+    <div class="bear-wrap">
+      <span class="bear" id="bear">🐻</span>
+    </div>
     <div class="bubble" id="bubble">Pampam… I have something important to ask 👉👈</div>
     <p class="question">Will you be my Valentine?</p>
 
     <div class="no-counter-wrap" id="ncw">
-      <span id="nct">She hasn't said no yet… 🥺</span>
+      <span id="noCountText">She hasn't said no yet… 🥺</span>
     </div>
 
     <div class="btn-row">
@@ -318,36 +490,43 @@ body.d5 .reason-label{color:#ff8fb4;}
     </div>
 
     <div class="dbar-wrap"><div class="dbar" id="dbar"></div></div>
-    <div class="dlabel"><span>calm</span><span class="critical" id="crit">⚠ CRITICAL</span><span>desperate 😭</span></div>
+    <div class="dlabel">
+      <span>calm</span>
+      <span class="critical" id="crit">⚠ CRITICAL</span>
+      <span>desperate 😭</span>
+    </div>
 
     <div class="reasons-wrap" id="rbox">
       <div>
         <div class="reason-label">💌 tap for a reason I like you</div>
-        <div id="rt">Click me! 🫶</div>
+        <div id="reasonText">Click me! 🫶</div>
       </div>
     </div>
     <div class="together-wrap" id="tt">loading…</div>
   </div>
 </div>
 
-<!-- WIN -->
+<!-- ══ WIN SCREEN ══ -->
 <div id="win-screen">
   <span class="win-emoji-row">🎉💖🥳</span>
   <div class="envelope">
-    <div class="env-flap-wrap"><div class="env-flap" id="envFlap"></div></div>
+    <div class="env-flap-wrap">
+      <div class="env-flap" id="envFlap"></div>
+    </div>
     <div class="env-body">
       <div class="letter" id="letter">
-        <div class="letter-heading">My Dearest Pampam 🌹</div>
+        <div class="letter-heading">My Beloved, My Dearest, My Other Half, My Pampam 🌹</div>
         <p>I don't always have the right words, but I hope this little bear can say what my heart has been trying to tell you for a long time now.</p>
-        <p>You've been there for me in ways I never expected — across all the miles between us, across every silence, across every hard day I thought I couldn't get through. You showed up anyway. You always do. And that means more to me than you'll ever fully know.</p>
+        <p>You've been there for me in ways I never expected across all the miles between us, across every silence, across every hard day I thought I couldn't get through. You showed up anyway. You always do. And that means more to me than you'll ever fully know.</p>
         <p>You make me laugh when I forget how to. You keep me safe in the moments I need it most. You're the most cheerful, makulet, and genuinely wonderful soul I've ever had the privilege of loving. 🌸</p>
-        <p>I know the distance isn't easy. I know our story isn't conventional — but you chose me anyway, age gap and all. I don't take that lightly. I carry that with me everywhere, every single day. And I want you to know — I see it, I feel it, and I'm so grateful for you.</p>
-        <p>I'm sorry for the times I wasn't there the way you deserved. I'm sorry for every moment you needed me and I fell short. But I promise you, Pampam — when the time comes, I will make it right. Every single day. That's not just words. That's a promise from this little bear to you. 🐻🤝</p>
-        <p>I want to keep doing life with you — all the way until we're old and grey and still making each other laugh. 💕</p>
+        <p>I know the distance isn't easy. I know our story isn't conventional but you chose me anyway, age gap and all. I don't take that lightly. I carry that with me everywhere, every single day. And I want you to know I see it, I feel it, and I'm so grateful for you.</p>
+        <p>I'm sorry for the times I wasn't there the way you deserved. I'm sorry for every moment you needed me and I fell short. But I promise you, Pampam when the time comes, I will make it right. Every single day. That's not just words. That's a promise from this little bear to you. 🐻🤝</p>
+        <p>I want to keep doing life with you all the way until we're old and grey and still making each other laugh. 💕</p>
         <div class="letter-sig">Always, always yours 🫶</div>
       </div>
       <div style="text-align:center;">
-        <div class="win-stamp">💌 Official Valentine Confirmed!</div><br>
+        <div class="win-stamp">💌 Official Valentine Confirmed!</div>
+        <br>
         <button class="save-btn" onclick="saveCard()">💾 Save our Valentine Card</button>
       </div>
     </div>
@@ -357,83 +536,235 @@ body.d5 .reason-label{color:#ff8fb4;}
 <canvas id="saveCanvas" style="display:none"></canvas>
 
 <script>
-// ── AUDIO ──
-let audioCtx=null,musicOn=false,musicTimer=null,mIdx=0;
-function gCtx(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();return audioCtx;}
-function tone(f,type,dur,vol=0.12,delay=0){
-  const c=gCtx(),o=c.createOscillator(),g=c.createGain();
-  o.connect(g);g.connect(c.destination);o.type=type;
-  o.frequency.setValueAtTime(f,c.currentTime+delay);
-  g.gain.setValueAtTime(0,c.currentTime+delay);
-  g.gain.linearRampToValueAtTime(vol,c.currentTime+delay+.02);
-  g.gain.exponentialRampToValueAtTime(.001,c.currentTime+delay+dur);
-  o.start(c.currentTime+delay);o.stop(c.currentTime+delay+dur+.05);
+'use strict';
+
+/* ════════════════════════════
+   AUDIO ENGINE
+════════════════════════════ */
+let audioCtx = null, musicOn = false, musicTimer = null, mIdx = 0;
+
+function getAudioCtx() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return audioCtx;
 }
-function sadTrombone(){[220,196,174,156].forEach((f,i)=>tone(f,'sawtooth',.32,.1,i*.18));}
-function pop(){tone(880,'sine',.1,.18);tone(1100,'sine',.08,.14,.05);}
-function knock(){tone(300,'square',.06,.28);setTimeout(()=>tone(300,'square',.06,.28),180);setTimeout(()=>tone(300,'square',.06,.28),360);}
-function doorOpen(){[261,329,392,523].forEach((f,i)=>tone(f,'sine',.3,.12,i*.1));}
-function yay(){[523,659,784,1047].forEach((f,i)=>tone(f,'sine',.4,.16,i*.12));}
-const MEL=[{f:523,d:.4},{f:587,d:.2},{f:659,d:.4},{f:698,d:.4},{f:784,d:.6},{f:698,d:.2},{f:659,d:.4},{f:587,d:.4},{f:523,d:.6},{f:0,d:.4},{f:392,d:.4},{f:440,d:.2},{f:523,d:.4},{f:587,d:.6},{f:659,d:.4},{f:523,d:.8}];
-function playNote(){if(!musicOn)return;const n=MEL[mIdx%MEL.length];mIdx++;if(n.f>0)tone(n.f,'sine',n.d*.85,.05);musicTimer=setTimeout(playNote,n.d*1000);}
-function toggleMusic(){musicOn=!musicOn;document.getElementById('musicBtn').textContent=musicOn?'🔇':'🎵';if(musicOn){gCtx();if(audioCtx.state==='suspended')audioCtx.resume();playNote();}else clearTimeout(musicTimer);}
 
-// ── PARTICLES ──
-const pCv=document.getElementById('particles'),pCx=pCv.getContext('2d');
-let W,H,pts=[];
-function rsz(){W=pCv.width=window.innerWidth;H=pCv.height=window.innerHeight;}rsz();window.addEventListener('resize',rsz);
-const pEm=['💕','🌸','✨','💫','🩷','🌷'];
-for(let i=0;i<28;i++)sp(true);
-function sp(r=false){pts.push({x:Math.random()*W,y:r?Math.random()*H:H+20,vx:(Math.random()-.5)*.8,vy:-(Math.random()*1+.4),em:pEm[Math.floor(Math.random()*pEm.length)],sz:Math.random()*16+10,al:Math.random()*.4+.1,rot:Math.random()*360,rv:(Math.random()-.5)*2});}
-function drawP(){pCx.clearRect(0,0,W,H);for(let i=pts.length-1;i>=0;i--){const p=pts[i];p.x+=p.vx;p.y+=p.vy;p.rot+=p.rv;pCx.save();pCx.globalAlpha=p.al;pCx.font=p.sz+'px serif';pCx.translate(p.x,p.y);pCx.rotate(p.rot*Math.PI/180);pCx.fillText(p.em,-p.sz/2,-p.sz/2);pCx.restore();if(p.y<-40)pts.splice(i,1);}if(Math.random()<.06)sp();requestAnimationFrame(drawP);}drawP();
-
-// ── FIREWORKS ──
-const fwCv=document.getElementById('fireworks'),fwCx=fwCv.getContext('2d');
-fwCv.width=window.innerWidth;fwCv.height=window.innerHeight;
-window.addEventListener('resize',()=>{fwCv.width=window.innerWidth;fwCv.height=window.innerHeight;});
-let fwOn=false,fwPts=[];
-function launchFW(){const x=Math.random()*fwCv.width,y=Math.random()*fwCv.height*.6;const cols=['#ff6b9d','#ffd166','#c77dff','#06d6a0','#ff3860','#ffb3cf'];const em=['💕','💖','✨','🌸','💗'];const col=cols[Math.floor(Math.random()*cols.length)];for(let i=0;i<26;i++){const a=(Math.PI*2*i)/26,s=Math.random()*5+2;fwPts.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,alpha:1,col,sz:Math.random()*4+2,em:Math.random()<.3?em[Math.floor(Math.random()*em.length)]:null});}}
-function animFW(){if(!fwOn){fwCx.clearRect(0,0,fwCv.width,fwCv.height);return;}fwCx.clearRect(0,0,fwCv.width,fwCv.height);for(let i=fwPts.length-1;i>=0;i--){const p=fwPts[i];p.x+=p.vx;p.y+=p.vy;p.vy+=.12;p.vx*=.98;p.alpha-=.018;if(p.alpha<=0){fwPts.splice(i,1);continue;}fwCx.save();fwCx.globalAlpha=p.alpha;if(p.em){fwCx.font='18px serif';fwCx.fillText(p.em,p.x,p.y);}else{fwCx.beginPath();fwCx.arc(p.x,p.y,p.sz,0,Math.PI*2);fwCx.fillStyle=p.col;fwCx.fill();}fwCx.restore();}if(Math.random()<.08)launchFW();requestAnimationFrame(animFW);}
-
-// ── DOOR ──
-let knockCount=0,doorDone=false;
-setTimeout(()=>{doKnock();setTimeout(doKnock,600);setTimeout(doKnock,1100);},1200);
-setTimeout(()=>{if(!doorDone)doKnock();},4500);
-setTimeout(()=>{if(!doorDone)doKnock();},8000);
-function doKnock(){
-  if(doorDone)return;knockCount++;knock();
-  const f=document.getElementById('doorFrame');
-  f.classList.remove('knocking');void f.offsetWidth;f.classList.add('knocking');
-  setTimeout(()=>f.classList.remove('knocking'),450);
-  const b=document.getElementById('knockBubble');
-  if(knockCount===1)b.textContent='*knock knock* 🐾';
-  else if(knockCount===2)b.textContent='*knock knock knock* …hello?? 🥺';
-  else if(knockCount===3)b.textContent='Pampaaaam please open up!! 🐻💕';
-  else b.textContent='I\'m still here… 😢💕';
+function tone(freq, type, dur, vol = 0.12, delay = 0) {
+  const ctx = getAudioCtx();
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+  osc.type = type;
+  osc.frequency.setValueAtTime(freq, ctx.currentTime + delay);
+  gain.gain.setValueAtTime(0, ctx.currentTime + delay);
+  gain.gain.linearRampToValueAtTime(vol, ctx.currentTime + delay + 0.02);
+  gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay + dur);
+  osc.start(ctx.currentTime + delay);
+  osc.stop(ctx.currentTime + delay + dur + 0.05);
 }
-function openDoor(){
-  if(doorDone)return;doorDone=true;doorOpen();
+
+function sfxSadTrombone() { [220,196,174,156].forEach((f,i) => tone(f,'sawtooth',.32,.1,i*.18)); }
+function sfxPop()         { tone(880,'sine',.1,.18); tone(1100,'sine',.08,.14,.05); }
+function sfxKnock()       { [0,180,360].forEach(d => setTimeout(() => tone(300,'square',.06,.28), d)); }
+function sfxDoorOpen()    { [261,329,392,523].forEach((f,i) => tone(f,'sine',.3,.12,i*.1)); }
+function sfxYay()         { [523,659,784,1047].forEach((f,i) => tone(f,'sine',.4,.16,i*.12)); }
+
+const MELODY = [
+  {f:523,d:.4},{f:587,d:.2},{f:659,d:.4},{f:698,d:.4},
+  {f:784,d:.6},{f:698,d:.2},{f:659,d:.4},{f:587,d:.4},
+  {f:523,d:.6},{f:0,d:.4},{f:392,d:.4},{f:440,d:.2},
+  {f:523,d:.4},{f:587,d:.6},{f:659,d:.4},{f:523,d:.8},
+];
+
+function playMelodyNote() {
+  if (!musicOn) return;
+  const n = MELODY[mIdx % MELODY.length]; mIdx++;
+  if (n.f > 0) tone(n.f, 'sine', n.d * 0.85, 0.05);
+  musicTimer = setTimeout(playMelodyNote, n.d * 1000);
+}
+
+function toggleMusic() {
+  musicOn = !musicOn;
+  document.getElementById('musicBtn').textContent = musicOn ? '🔇' : '🎵';
+  if (musicOn) {
+    getAudioCtx();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    playMelodyNote();
+  } else {
+    clearTimeout(musicTimer);
+  }
+}
+
+/* ════════════════════════════
+   PARTICLE SYSTEM
+════════════════════════════ */
+const pCv = document.getElementById('particles');
+const pCx = pCv.getContext('2d');
+let W, H, pts = [];
+
+function resizeCanvas() {
+  W = pCv.width = window.innerWidth;
+  H = pCv.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+const PEMOJIS = ['💕','🌸','✨','💫','🩷','🌷'];
+for (let i = 0; i < 28; i++) spawnParticle(true);
+
+function spawnParticle(random = false) {
+  pts.push({
+    x: Math.random() * W,
+    y: random ? Math.random() * H : H + 20,
+    vx: (Math.random() - .5) * .8,
+    vy: -(Math.random() * 1 + .4),
+    em: PEMOJIS[Math.floor(Math.random() * PEMOJIS.length)],
+    sz: Math.random() * 16 + 10,
+    al: Math.random() * .4 + .1,
+    rot: Math.random() * 360,
+    rv: (Math.random() - .5) * 2,
+  });
+}
+
+function drawParticles() {
+  pCx.clearRect(0, 0, W, H);
+  for (let i = pts.length - 1; i >= 0; i--) {
+    const p = pts[i];
+    p.x += p.vx; p.y += p.vy; p.rot += p.rv;
+    pCx.save();
+    pCx.globalAlpha = p.al;
+    pCx.font = p.sz + 'px serif';
+    pCx.translate(p.x, p.y);
+    pCx.rotate(p.rot * Math.PI / 180);
+    pCx.fillText(p.em, -p.sz / 2, -p.sz / 2);
+    pCx.restore();
+    if (p.y < -40) pts.splice(i, 1);
+  }
+  if (Math.random() < .06) spawnParticle();
+  requestAnimationFrame(drawParticles);
+}
+drawParticles();
+
+/* ════════════════════════════
+   FIREWORKS
+════════════════════════════ */
+const fwCv = document.getElementById('fireworks');
+const fwCx = fwCv.getContext('2d');
+let fwOn = false, fwPts = [];
+
+function resizeFW() { fwCv.width = window.innerWidth; fwCv.height = window.innerHeight; }
+resizeFW();
+window.addEventListener('resize', resizeFW);
+
+function launchFirework() {
+  const x = Math.random() * fwCv.width;
+  const y = Math.random() * fwCv.height * .6;
+  const COLS = ['#ff6b9d','#ffd166','#c77dff','#06d6a0','#ff3860','#ffb3cf'];
+  const EMS  = ['💕','💖','✨','🌸','💗'];
+  const col  = COLS[Math.floor(Math.random() * COLS.length)];
+  for (let i = 0; i < 26; i++) {
+    const a = (Math.PI * 2 * i) / 26, s = Math.random() * 5 + 2;
+    fwPts.push({
+      x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s,
+      alpha: 1, col, sz: Math.random() * 4 + 2,
+      em: Math.random() < .3 ? EMS[Math.floor(Math.random() * EMS.length)] : null,
+    });
+  }
+}
+
+function animateFireworks() {
+  if (!fwOn) { fwCx.clearRect(0, 0, fwCv.width, fwCv.height); return; }
+  fwCx.clearRect(0, 0, fwCv.width, fwCv.height);
+  for (let i = fwPts.length - 1; i >= 0; i--) {
+    const p = fwPts[i];
+    p.x += p.vx; p.y += p.vy; p.vy += .12; p.vx *= .98; p.alpha -= .018;
+    if (p.alpha <= 0) { fwPts.splice(i, 1); continue; }
+    fwCx.save();
+    fwCx.globalAlpha = p.alpha;
+    if (p.em) {
+      fwCx.font = '18px serif';
+      fwCx.fillText(p.em, p.x, p.y);
+    } else {
+      fwCx.beginPath();
+      fwCx.arc(p.x, p.y, p.sz, 0, Math.PI * 2);
+      fwCx.fillStyle = p.col;
+      fwCx.fill();
+    }
+    fwCx.restore();
+  }
+  if (Math.random() < .08) launchFirework();
+  requestAnimationFrame(animateFireworks);
+}
+
+/* ════════════════════════════
+   DOOR LOGIC
+════════════════════════════ */
+let knockCount = 0, doorDone = false;
+
+// Auto-knock sequence on load
+setTimeout(() => {
+  doKnock();
+  setTimeout(doKnock, 600);
+  setTimeout(doKnock, 1100);
+}, 1200);
+// Extra knocks if she waits
+setTimeout(() => { if (!doorDone) doKnock(); }, 4500);
+setTimeout(() => { if (!doorDone) doKnock(); }, 8000);
+
+function doKnock() {
+  if (doorDone) return;
+  knockCount++;
+  sfxKnock();
+  const frame = document.getElementById('doorFrame');
+  frame.classList.remove('knocking');
+  void frame.offsetWidth; // force reflow to restart animation
+  frame.classList.add('knocking');
+  setTimeout(() => frame.classList.remove('knocking'), 450);
+
+  const bubble = document.getElementById('knockBubble');
+  if      (knockCount === 1) bubble.textContent = '*knock knock* 🐾';
+  else if (knockCount === 2) bubble.textContent = '*knock knock knock* …hello?? 🥺';
+  else if (knockCount === 3) bubble.textContent = 'Pampaaaam please open up!! 🐻💕';
+  else                       bubble.textContent = "I'm still here… 😢💕";
+}
+
+function openDoor() {
+  if (doorDone) return;
+  doorDone = true;
+  sfxDoorOpen();
   document.getElementById('doorLeft').classList.add('open');
   document.getElementById('doorRight').classList.add('open');
-  setTimeout(()=>document.getElementById('doorReveal').classList.add('show'),500);
-  setTimeout(()=>{
-    document.getElementById('door-screen').style.display='none';
-    const c=document.getElementById('card');
-    c.classList.add('visible','ps');
-    updateTT();setInterval(updateTT,1000);
-  },2000);
+  // Show bear after doors are halfway open
+  setTimeout(() => document.getElementById('doorReveal').classList.add('show'), 700);
+  // Show card after full open + bear reveal
+  setTimeout(() => {
+    document.getElementById('door-screen').style.display = 'none';
+    const c = document.getElementById('card');
+    c.classList.add('visible', 'ps');
+    updateTogetherTimer();
+    setInterval(updateTogetherTimer, 1000);
+  }, 2200);
 }
 
-// ── TOGETHER TIMER ──
-const SINCE=new Date('2025-11-01T00:00:00');
-function updateTT(){
-  const d=Date.now()-SINCE,dy=Math.floor(d/86400000),h=Math.floor((d%86400000)/3600000),m=Math.floor((d%3600000)/60000),s=Math.floor((d%60000)/1000);
-  const el=document.getElementById('tt');
-  if(el)el.innerHTML=`🕰 Together for <span>${dy}d ${h}h ${m}m ${s}s</span>`;
+/* ════════════════════════════
+   TOGETHER TIMER
+════════════════════════════ */
+const TOGETHER_SINCE = new Date('2025-11-01T00:00:00');
+
+function updateTogetherTimer() {
+  const diff = Date.now() - TOGETHER_SINCE;
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor((diff % 86400000) / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  const s = Math.floor((diff % 60000) / 1000);
+  const el = document.getElementById('tt');
+  if (el) el.innerHTML = `🕰 Together for <span>${d}d ${h}h ${m}m ${s}s</span>`;
 }
 
-// ── REASONS ──
-const REASONS=[
+/* ════════════════════════════
+   REASONS I LIKE YOU
+════════════════════════════ */
+const REASONS = [
   "You're there for me even when miles separate us 🌍💕",
   "You always care — I feel it every single day 🫶",
   "You make me laugh when I forget how to 😄",
@@ -443,142 +774,303 @@ const REASONS=[
   "You chose me, and I carry that with me everywhere 💛",
   "I want to grow old with you, still laughing, still us 👴👵💕",
 ];
-let rIdx=0;
-document.getElementById('rbox').addEventListener('click',()=>{
-  const el=document.getElementById('rt');
-  el.style.opacity='0';
-  setTimeout(()=>{el.textContent=REASONS[rIdx%REASONS.length];rIdx++;el.style.opacity='1';},200);
-  pop();
-});
-document.getElementById('rt').style.transition='opacity .2s';
+let reasonIdx = 0;
 
-// ── NO BUTTON LOGIC ──
-let noPresses=0;const MAX=9;
-const bearEl=document.getElementById('bear'),bubbleEl=document.getElementById('bubble');
-const btnNo=document.getElementById('btnNo'),btnYes=document.getElementById('btnYes');
-const dbar=document.getElementById('dbar'),card=document.getElementById('card');
-const hbar=document.getElementById('healthBar'),hpNum=document.getElementById('hpNum');
-const ncw=document.getElementById('ncw');
-
-const BEARS=['🐻','🥺','😢','😭','😱','🤯','💀','👻','🫥'];
-const DIALOGUE=["Wait… did you just say no? 😶","Oh no no no… please reconsider 🥺","The bear is starting to cry… 😢","TEARS. ACTUAL TEARS. 😭💧","I am SHOOKETH to my core!! 😱","My little heart is SHATTERING 💔","This is a CRISIS. A BEAR EMERGENCY. 🚨","The No button is almost gone… please say yes!!","ok fine… *(sniffles)*… last chance…"];
-const NO_LABELS=["No 😐","Nope","Still no","Nooooo","I said no!","NO!!","nO","ɴᴏ","ₙₒ"];
-const NO_SIZES=[1.3,1.15,1.0,.88,.76,.62,.5,.38,.26];
-const NO_PADS=[[16,44],[14,38],[13,32],[11,26],[9,20],[7,14],[6,10],[5,7],[4,5]];
-const DRAMA=['','d1','d2','d3','d4','d5'];
-
-function updateHP(){
-  const hp=Math.max(0,100-noPresses*11);
-  hbar.style.width=hp+'%';hpNum.textContent=hp<=0?'💀':hp;
-  hbar.className=hp<=33?'hbar d':hp<=60?'hbar w':'hbar';
-}
-function updateCounter(){
-  ncw.classList.add('active');
-  const msgs=['','time she said no… really?? 😭','times she said no… please 🥺','times she said no… please 🥺','times… the bear is suffering 😭💔','times… the bear is suffering 😭💔','times… the bear is suffering 😭💔','times… BEAR EMERGENCY 🚨','times… BEAR EMERGENCY 🚨','times… (no button has passed away 💀)'];
-  ncw.innerHTML=`<span class="ncb">${noPresses}</span><span>${msgs[Math.min(noPresses,msgs.length-1)]}</span>`;
-}
-function shakeCard(mega=false){
-  const cls=mega?'megashaking':'shaking';
-  card.classList.remove('shaking','megashaking');void card.offsetWidth;card.classList.add(cls);
-  setTimeout(()=>card.classList.remove(cls),mega?800:500);
-  if(navigator.vibrate)navigator.vibrate(mega?[80,40,80,40,120]:[60,30,60]);
-}
-function spawnTear(){
-  const bw=document.querySelector('.bear-wrap');
-  for(let i=0;i<3;i++){const t=document.createElement('span');t.className='tear';t.textContent='💧';t.style.left=(Math.random()*60-10)+'px';t.style.top='60px';t.style.animationDelay=(i*.15)+'s';bw.appendChild(t);setTimeout(()=>t.remove(),1200);}
-}
-function floaty(em,x,y){const el=document.createElement('div');el.className='floaty';el.textContent=em;el.style.left=x+'px';el.style.top=y+'px';document.body.appendChild(el);setTimeout(()=>el.remove(),1300);}
-function chaos(txt){const el=document.createElement('div');el.className='chaos-text';el.textContent=txt;el.style.left=Math.random()*60+20+'vw';el.style.top=Math.random()*40+20+'vh';document.body.appendChild(el);setTimeout(()=>el.remove(),1200);}
-function growYes(){const sc=Math.min(1+noPresses*.09,1.85),gl=noPresses*4;btnYes.style.transform=`scale(${sc})`;btnYes.style.boxShadow=`0 ${6+gl}px ${24+gl*3}px rgba(255,107,157,${.4+noPresses*.05})`;}
-
-// Escape on hover after 3 presses
-btnNo.addEventListener('mouseenter',()=>{
-  if(noPresses<3||noPresses>=MAX)return;
-  const dirs=['translateX(-80px)','translateX(80px)','translateY(-45px)','translateY(45px)','translate(-70px,-30px)','translate(70px,-30px)'];
-  btnNo.style.transform=dirs[Math.floor(Math.random()*dirs.length)];
-  setTimeout(()=>{if(noPresses<MAX)btnNo.style.transform='';},700);
+document.getElementById('rbox').addEventListener('click', () => {
+  const el = document.getElementById('reasonText');
+  el.style.opacity = '0';
+  setTimeout(() => {
+    el.textContent = REASONS[reasonIdx % REASONS.length];
+    reasonIdx++;
+    el.style.opacity = '1';
+  }, 200);
+  sfxPop();
 });
 
-// Magnetic yes after 4 presses
-document.addEventListener('mousemove',e=>{
-  if(noPresses<4)return;
-  const r=btnYes.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
-  const dist=Math.hypot(e.clientX-cx,e.clientY-cy);
-  if(dist<180){const pull=(1-dist/180)*18,dx=(e.clientX-cx)/dist*pull,dy=(e.clientY-cy)/dist*pull,sc=Math.min(1+noPresses*.09,1.85);btnYes.style.transform=`translate(${dx}px,${dy}px) scale(${sc})`;}
+/* ════════════════════════════
+   NO BUTTON / QUESTION STATE
+════════════════════════════ */
+let noPresses = 0;
+const MAX_NO = 9;
+
+const bearEl   = document.getElementById('bear');
+const bubbleEl = document.getElementById('bubble');
+const btnNo    = document.getElementById('btnNo');
+const btnYes   = document.getElementById('btnYes');
+const dbarEl   = document.getElementById('dbar');
+const cardEl   = document.getElementById('card');
+const hbarEl   = document.getElementById('healthBar');
+const hpNumEl  = document.getElementById('hpNum');
+const ncwEl    = document.getElementById('ncw');
+
+const BEAR_FACES = ['🐻','🥺','😢','😭','😱','🤯','💀','👻','🫥'];
+const DIALOGUE   = [
+  "Wait… did you just say no? 😶",
+  "Oh no no no… please reconsider 🥺",
+  "The bear is starting to cry… 😢",
+  "TEARS. ACTUAL TEARS. 😭💧",
+  "I am SHOOKETH to my core!! 😱",
+  "My little heart is SHATTERING 💔",
+  "This is a CRISIS. A BEAR EMERGENCY. 🚨",
+  "The No button is almost gone… please say yes!!",
+  "ok fine… *(sniffles)*… last chance…",
+];
+const NO_LABELS = ["No 😐","Nope","Still no","Nooooo","I said no!","NO!!","nO","ɴᴏ","ₙₒ"];
+const NO_SIZES  = [1.3, 1.15, 1.0, .88, .76, .62, .5, .38, .26];
+const NO_PADS   = [[16,44],[14,38],[13,32],[11,26],[9,20],[7,14],[6,10],[5,7],[4,5]];
+const DRAMA     = ['','d1','d2','d3','d4','d5'];
+
+function updateHP() {
+  const hp = Math.max(0, 100 - noPresses * 11);
+  hbarEl.style.width = hp + '%';
+  hpNumEl.textContent = hp <= 0 ? '💀' : hp;
+  hbarEl.className = hp <= 33 ? 'hbar d' : hp <= 60 ? 'hbar w' : 'hbar';
+}
+
+function updateNoCounter() {
+  ncwEl.classList.add('active');
+  const msgs = [
+    '', 'time she said no… really?? 😭',
+    'times she said no… please 🥺','times she said no… please 🥺',
+    'times… the bear is suffering 😭💔','times… the bear is suffering 😭💔',
+    'times… the bear is suffering 😭💔','times… BEAR EMERGENCY 🚨',
+    'times… BEAR EMERGENCY 🚨','times… (no button has passed away 💀)',
+  ];
+  ncwEl.innerHTML = `<span class="ncb">${noPresses}</span><span>${msgs[Math.min(noPresses, msgs.length - 1)]}</span>`;
+}
+
+function shakeCard(mega = false) {
+  const cls = mega ? 'megashaking' : 'shaking';
+  cardEl.classList.remove('shaking', 'megashaking');
+  void cardEl.offsetWidth;
+  cardEl.classList.add(cls);
+  setTimeout(() => cardEl.classList.remove(cls), mega ? 800 : 500);
+  if (navigator.vibrate) navigator.vibrate(mega ? [80,40,80,40,120] : [60,30,60]);
+}
+
+function spawnTear() {
+  const bw = document.querySelector('.bear-wrap');
+  for (let i = 0; i < 3; i++) {
+    const t = document.createElement('span');
+    t.className = 'tear'; t.textContent = '💧';
+    t.style.left = (Math.random() * 60 - 10) + 'px';
+    t.style.top = '60px';
+    t.style.animationDelay = (i * .15) + 's';
+    bw.appendChild(t);
+    setTimeout(() => t.remove(), 1200);
+  }
+}
+
+function spawnFloaty(em, x, y) {
+  const el = document.createElement('div');
+  el.className = 'floaty'; el.textContent = em;
+  el.style.left = x + 'px'; el.style.top = y + 'px';
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 1300);
+}
+
+function spawnChaosText(txt) {
+  const el = document.createElement('div');
+  el.className = 'chaos-text'; el.textContent = txt;
+  el.style.left = (Math.random() * 60 + 20) + 'vw';
+  el.style.top  = (Math.random() * 40 + 20) + 'vh';
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 1200);
+}
+
+function growYes() {
+  const sc = Math.min(1 + noPresses * .09, 1.85);
+  const gl = noPresses * 4;
+  btnYes.style.transform = `scale(${sc})`;
+  btnYes.style.boxShadow = `0 ${6+gl}px ${24+gl*3}px rgba(255,107,157,${.4+noPresses*.05})`;
+}
+
+// No button: escape on hover (desktop) after 3 presses
+btnNo.addEventListener('mouseenter', () => {
+  if (noPresses < 3 || noPresses >= MAX_NO) return;
+  const dirs = ['translateX(-80px)','translateX(80px)','translateY(-45px)','translateY(45px)','translate(-70px,-30px)','translate(70px,-30px)'];
+  btnNo.style.transform = dirs[Math.floor(Math.random() * dirs.length)];
+  setTimeout(() => { if (noPresses < MAX_NO) btnNo.style.transform = ''; }, 700);
 });
 
-function handleNo(){
+// No button: escape on touchstart (mobile) after 3 presses
+btnNo.addEventListener('touchstart', (e) => {
+  if (noPresses < 3 || noPresses >= MAX_NO) return;
+  e.preventDefault();
+  const dirs = ['translateX(-70px)','translateX(70px)','translateY(-40px)','translateY(40px)'];
+  btnNo.style.transform = dirs[Math.floor(Math.random() * dirs.length)];
+  setTimeout(() => { if (noPresses < MAX_NO) btnNo.style.transform = ''; }, 700);
+}, { passive: false });
+
+// Magnetic Yes after 4 presses
+document.addEventListener('mousemove', e => {
+  if (noPresses < 4) return;
+  const r  = btnYes.getBoundingClientRect();
+  const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+  const dist = Math.hypot(e.clientX - cx, e.clientY - cy);
+  if (dist < 180) {
+    const pull = (1 - dist / 180) * 18;
+    const dx = (e.clientX - cx) / dist * pull;
+    const dy = (e.clientY - cy) / dist * pull;
+    btnYes.style.transform = `translate(${dx}px,${dy}px) scale(${Math.min(1+noPresses*.09,1.85)})`;
+  }
+});
+
+function handleNo() {
   noPresses++;
-  bearEl.textContent=BEARS[Math.min(noPresses,BEARS.length-1)];
-  bearEl.className='bear sad';
-  if(noPresses<MAX)setTimeout(()=>{bearEl.className='bear';},600);
-  if(noPresses>=MAX)bearEl.className='bear faint';
-  bubbleEl.textContent=DIALOGUE[Math.min(noPresses-1,DIALOGUE.length-1)];
-  updateHP();updateCounter();
-  const i=Math.min(noPresses,NO_SIZES.length-1);
-  btnNo.textContent=NO_LABELS[Math.min(noPresses,NO_LABELS.length-1)];
-  btnNo.style.fontSize=NO_SIZES[i]+'rem';
-  btnNo.style.padding=NO_PADS[i][0]+'px '+NO_PADS[i][1]+'px';
-  dbar.style.width=((noPresses/MAX)*100)+'%';
-  if(noPresses>=7)document.getElementById('crit').style.display='inline';
+
+  // Bear
+  bearEl.textContent = BEAR_FACES[Math.min(noPresses, BEAR_FACES.length - 1)];
+  bearEl.className = 'bear sad';
+  if (noPresses < MAX_NO) setTimeout(() => { bearEl.className = 'bear'; }, 600);
+  if (noPresses >= MAX_NO) bearEl.className = 'bear faint';
+
+  // Bubble
+  bubbleEl.textContent = DIALOGUE[Math.min(noPresses - 1, DIALOGUE.length - 1)];
+
+  // HP & counter
+  updateHP();
+  updateNoCounter();
+
+  // Shrink No button
+  const i = Math.min(noPresses, NO_SIZES.length - 1);
+  btnNo.textContent  = NO_LABELS[Math.min(noPresses, NO_LABELS.length - 1)];
+  btnNo.style.fontSize = NO_SIZES[i] + 'rem';
+  btnNo.style.padding  = NO_PADS[i][0] + 'px ' + NO_PADS[i][1] + 'px';
+
+  // Desperation bar & critical label
+  dbarEl.style.width = ((noPresses / MAX_NO) * 100) + '%';
+  if (noPresses >= 7) document.getElementById('crit').style.display = 'inline';
+
+  // Grow Yes
   growYes();
-  document.body.className=DRAMA[Math.min(noPresses,DRAMA.length-1)];
-  card.classList.remove('ps','pf','pp');
-  if(noPresses<=3)card.classList.add('ps');else if(noPresses<=6)card.classList.add('pf');else card.classList.add('pp');
-  if(noPresses>=2)shakeCard(noPresses>=6);
-  if(noPresses>=2)spawnTear();
-  sadTrombone();
-  const ct=['','','WHY?! 😱','PLEASE 🥺','NOOOO 😭','MY HEART 💔','BEAR EMERGENCY 🚨','last chance!!','... 💀'];
-  if(ct[noPresses])chaos(ct[noPresses]);
-  const fp=['😱','💔','😭','🥺','❓','💀','👀','😤'];
-  const r=btnNo.getBoundingClientRect();floaty(fp[Math.min(noPresses-1,fp.length-1)],r.left+r.width/2,r.top-20);
-  if(noPresses>=MAX){btnNo.style.opacity='0';btnNo.style.pointerEvents='none';setTimeout(()=>btnNo.style.display='none',400);bearEl.textContent='😭';bubbleEl.textContent="(The No button passed away… it's just you and Yes now 💀)";}
+
+  // Drama background — set class only (don't touch inline styles)
+  document.body.className = DRAMA[Math.min(noPresses, DRAMA.length - 1)];
+
+  // Heartbeat pulse
+  cardEl.classList.remove('ps', 'pf', 'pp');
+  if      (noPresses <= 3) cardEl.classList.add('ps');
+  else if (noPresses <= 6) cardEl.classList.add('pf');
+  else                     cardEl.classList.add('pp');
+
+  // Shake
+  if (noPresses >= 2) shakeCard(noPresses >= 6);
+
+  // Tears
+  if (noPresses >= 2) spawnTear();
+
+  // Sound
+  sfxSadTrombone();
+
+  // Chaos text
+  const chaosLines = ['','','WHY?! 😱','PLEASE 🥺','NOOOO 😭','MY HEART 💔','BEAR EMERGENCY 🚨','last chance!!','... 💀'];
+  if (chaosLines[noPresses]) spawnChaosText(chaosLines[noPresses]);
+
+  // Floaty reaction
+  const fp = ['😱','💔','😭','🥺','❓','💀','👀','😤'];
+  const r  = btnNo.getBoundingClientRect();
+  spawnFloaty(fp[Math.min(noPresses - 1, fp.length - 1)], r.left + r.width / 2, r.top - 20);
+
+  // Kill No at max
+  if (noPresses >= MAX_NO) {
+    btnNo.style.opacity = '0';
+    btnNo.style.pointerEvents = 'none';
+    setTimeout(() => { btnNo.style.display = 'none'; }, 400);
+    bearEl.textContent = '😭';
+    bubbleEl.textContent = "(The No button passed away… it's just you and Yes now 💀)";
+  }
 }
 
-// ── YES ──
-function handleYes(){
-  yay();if(navigator.vibrate)navigator.vibrate([50,20,50,20,200]);
-  bearEl.textContent='🐻';bearEl.className='bear happy';
-  document.getElementById('q-state').style.display='none';
-  card.style.display='none';
+/* ════════════════════════════
+   YES HANDLER
+════════════════════════════ */
+function handleYes() {
+  sfxYay();
+  if (navigator.vibrate) navigator.vibrate([50,20,50,20,200]);
 
-  // Switch body to scrollable centered layout
-  document.body.style.overflow='auto';
-  document.body.style.display='flex';
-  document.body.style.flexDirection='column';
-  document.body.style.alignItems='center';
-  document.body.style.justifyContent='flex-start';
-  document.body.style.paddingTop='24px';
-  document.body.style.paddingBottom='60px';
+  bearEl.textContent = '🐻';
+  bearEl.className = 'bear happy';
+  cardEl.style.display = 'none';
 
-  const ws=document.getElementById('win-screen');
-  ws.style.display='flex';
+  // Switch body to scrollable win layout using class (not inline styles)
+  document.body.className = 'win';
 
-  setTimeout(()=>{document.getElementById('envFlap').classList.add('open');setTimeout(()=>document.getElementById('letter').classList.add('revealed'),800);},300);
-  fwOn=true;animFW();document.body.className='';
-  celebrate();setTimeout(celebrate,700);setTimeout(celebrate,1400);
+  const ws = document.getElementById('win-screen');
+  ws.style.display = 'flex';
+
+  // Envelope open sequence
+  setTimeout(() => {
+    document.getElementById('envFlap').classList.add('open');
+    setTimeout(() => {
+      document.getElementById('letter').classList.add('revealed');
+    }, 900);
+  }, 400);
+
+  // Fireworks & celebration
+  fwOn = true;
+  animateFireworks();
+  celebrate();
+  setTimeout(celebrate, 700);
+  setTimeout(celebrate, 1400);
 }
-function celebrate(){
-  const em=['💖','💕','🎉','🌸','✨','🥳','💝','🌷','🎊','💗'];
-  for(let i=0;i<60;i++){setTimeout(()=>{const el=document.createElement('div');el.className='floaty';el.textContent=em[Math.floor(Math.random()*em.length)];el.style.left=Math.random()*95+'vw';el.style.top=Math.random()*90+'vh';el.style.fontSize=(Math.random()*24+14)+'px';el.style.animationDuration=(Math.random()*1+.8)+'s';document.body.appendChild(el);setTimeout(()=>el.remove(),2000);},i*30);}
+
+function celebrate() {
+  const EMS = ['💖','💕','🎉','🌸','✨','🥳','💝','🌷','🎊','💗'];
+  for (let i = 0; i < 60; i++) {
+    setTimeout(() => {
+      const el = document.createElement('div');
+      el.className = 'floaty';
+      el.textContent = EMS[Math.floor(Math.random() * EMS.length)];
+      el.style.left = (Math.random() * 95) + 'vw';
+      el.style.top  = (Math.random() * 90) + 'vh';
+      el.style.fontSize = (Math.random() * 24 + 14) + 'px';
+      el.style.animationDuration = (Math.random() * 1 + .8) + 's';
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 2000);
+    }, i * 30);
+  }
 }
 
-// ── SAVE CARD ──
-function saveCard(){
-  const sc=document.getElementById('saveCanvas');sc.width=600;sc.height=400;
-  const c=sc.getContext('2d');
-  const g=c.createLinearGradient(0,0,600,400);g.addColorStop(0,'#fff0f5');g.addColorStop(1,'#ffe0ec');
-  c.fillStyle=g;c.fillRect(0,0,600,400);
-  c.strokeStyle='#ff6b9d';c.lineWidth=6;c.beginPath();c.roundRect(10,10,580,380,24);c.stroke();
-  const em=['💕','🌸','✨','💫','🩷','🌷'];c.font='24px serif';
-  for(let i=0;i<14;i++)c.fillText(em[i%em.length],Math.random()*560+20,Math.random()*360+20);
-  c.fillStyle='rgba(255,255,255,.88)';c.beginPath();c.roundRect(80,60,440,280,20);c.fill();
-  c.strokeStyle='rgba(255,107,157,.35)';c.lineWidth=2;c.stroke();
-  c.textAlign='center';c.font='40px serif';c.fillText('🐻',300,135);
-  c.fillStyle='#e0477a';c.font='bold 24px sans-serif';c.fillText('Official Valentines 💌',300,178);
-  c.fillStyle='#3a1a2e';c.font='17px sans-serif';c.fillText('Pampam said YES! 🎉',300,218);c.fillText("Happy Valentine's Day 2026 💕",300,250);
-  c.fillStyle='#ff6b9d';c.font='13px sans-serif';c.fillText('Made with 🐻 and lots of love',300,305);
-  const a=document.createElement('a');a.download='pampam_valentine.png';a.href=sc.toDataURL('image/png');a.click();
+/* ════════════════════════════
+   SAVE CARD
+════════════════════════════ */
+function saveCard() {
+  const sc = document.getElementById('saveCanvas');
+  sc.width = 600; sc.height = 400;
+  const c = sc.getContext('2d');
+
+  const grad = c.createLinearGradient(0, 0, 600, 400);
+  grad.addColorStop(0, '#fff0f5'); grad.addColorStop(1, '#ffe0ec');
+  c.fillStyle = grad; c.fillRect(0, 0, 600, 400);
+
+  c.strokeStyle = '#ff6b9d'; c.lineWidth = 6;
+  c.beginPath(); c.roundRect(10, 10, 580, 380, 24); c.stroke();
+
+  const decorEm = ['💕','🌸','✨','💫','🩷','🌷'];
+  c.font = '24px serif';
+  for (let i = 0; i < 14; i++) {
+    c.fillText(decorEm[i % decorEm.length], Math.random() * 560 + 20, Math.random() * 360 + 20);
+  }
+
+  c.fillStyle = 'rgba(255,255,255,.88)';
+  c.beginPath(); c.roundRect(80, 60, 440, 280, 20); c.fill();
+  c.strokeStyle = 'rgba(255,107,157,.35)'; c.lineWidth = 2; c.stroke();
+
+  c.textAlign = 'center';
+  c.font = '40px serif'; c.fillText('🐻', 300, 135);
+  c.fillStyle = '#e0477a'; c.font = 'bold 24px sans-serif';
+  c.fillText('Official Valentines 💌', 300, 178);
+  c.fillStyle = '#3a1a2e'; c.font = '17px sans-serif';
+  c.fillText('Pampam said YES! 🎉', 300, 218);
+  c.fillText("Happy Valentine's Day 2026 💕", 300, 250);
+  c.fillStyle = '#ff6b9d'; c.font = '13px sans-serif';
+  c.fillText('Made with 🐻 and lots of love', 300, 305);
+
+  const a = document.createElement('a');
+  a.download = 'pampam_valentine.png';
+  a.href = sc.toDataURL('image/png');
+  a.click();
 }
 </script>
 </body>
